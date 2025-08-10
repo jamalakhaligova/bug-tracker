@@ -12,7 +12,13 @@ pipeline {
             }
             steps {
                 dir('bugtracker-backend') {
-                    sh 'go test -v ./...'
+                    sh 'go test -v ./... 2>&1 | go-junit-report > report.xml'
+                }
+            }
+
+            post {
+                always {
+                    junit 'bugtracker-backend/report.xml'
                 }
             }
         }
