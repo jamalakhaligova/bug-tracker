@@ -6,12 +6,12 @@ pipeline {
             agent {
                 docker {
                     image 'snakee/golang-junit:1.21'
+                    args '--user root'
                     reuseNode true
                 }
             }
             steps {
                 dir('bugtracker-backend') {
-                    sh 'mkdir -p /.cache && chmod -R 777 /.cache'
                     sh 'go test -v ./...'
                 }
             }
